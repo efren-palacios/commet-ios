@@ -142,6 +142,16 @@ void main() async {
     exit(result.exitCode);
   }
 
+  // Create integration_test/generated/l10n.dart re-export
+  var integrationGenDir = Directory("integration_test/generated");
+  if (!integrationGenDir.existsSync()) {
+    await integrationGenDir.create(recursive: true);
+  }
+  File("integration_test/generated/l10n.dart").writeAsStringSync(
+    "export 'package:commet/generated/l10n.dart';\n",
+  );
+  print("Generated integration_test/generated/l10n.dart");
+
   result = await buildRunner();
   if (result.exitCode != 0) {
     exit(result.exitCode);
