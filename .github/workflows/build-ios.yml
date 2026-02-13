@@ -33,8 +33,14 @@ jobs:
           cd $PROJECT_PATH
           flutter build ios --no-codesign --release --dart-define BUILD_MODE=release --dart-define PLATFORM=ios
 
+      - name: Package unsigned IPA
+        run: |
+          mkdir -p Payload
+          cp -r commet/build/ios/iphoneos/Runner.app Payload/
+          zip -r commet-ios-unsigned.ipa Payload
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: commet-ios-unsigned
-          path: commet/build/ios/iphoneos/Runner.app
+          path: commet-ios-unsigned.ipa
